@@ -1,6 +1,6 @@
 pg_ctl can be used to start, stop and promote/failover a standby database to primary. (Note: Standby can accept only reads in PG)
 
-# Sartup commands
+# Startup commands
   pg_ctl -D $PGDATA start  #Unlike oracle, no muliple startup modes in postgresql
   pg_ctl -D $PGDATA status
 
