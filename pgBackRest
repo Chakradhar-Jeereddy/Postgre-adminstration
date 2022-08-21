@@ -1,0 +1,100 @@
+Capability
+Open source tool offers parallel backups, incremental backups, differential backups and can stream a backup to cloud.
+This is very suitable for database environments that are several terabytes in size.
+
+Deployment steps -  
+PGDG repository should be configured.
+
+For centos 7.x
+#yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+
+For centos 8.x
+#dnf install https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+
+Install pgBackRest
+#yum install pgbackrest
+
+If it fails with dependency issues for some packages, install epel-release
+#yum install epel-release
+
+How to take backup using pgBackRest
+
+1) create a config file pgbackrest.conf
+# sudo bash -c 'cat << EOF > /etc/pgbackrest.conf
+ [global]
+ repo1-host=backupserver.percona.com
+ repo1-path=/backup_directory
+ repo1-retention-full=2
+ log-level-stderr=error
+ log-path=/backup/db/log
+ [percdb]
+ pg1-host=192.168.70.10
+ # The above line must be removed when the backup is performed locally.
+ pg1-path=/var/lib/pgsql/13/data
+ pg1-port=5432
+ EOF'
+
+2) Enable archive mode
+ psql -c "ALTER SYSTEM SET archive_mode = 'on'"
+ psql -c "ALTER SYSTEM SET archive_command = 'pgbackrest --stanza=percdb archive-push %p'"
+ sudo systemctl restart postgresql-12
+
+3) Initialize stanza for the database to be backed up and then validate to see any errors.
+a) create 
+$ pgbackrest stanza-create --stanza=percdb --log-level-console=info
+b) validate
+$ pgbackrest check --stanza=percdb --log-level-console=info
+c) start backup
+$ pgbackrest backup --stanza=percdb --log-level-console=info
+d) list backup
+$ pgbackrest info
+ 
+Note - 
+A stanza is used to define the backup configuration for a specific PostgreSQL database cluster.
+repo1-path => Is the location where backups and archives needs to stored.
+repo1-retention-full => how many backups needs to be retained
+pg1-host => indicates the remote PostgreSQL cluster that is being backed up
+pg1-path => Location of data directory of the cluster
+
+. If archive_mode needs to be changed, a restart is required, else, just a reload should be sufficient.
+
+
+Restoration steps 
+1) We must have pgBackRest installed on the target server where the backup is being restored to. 
+2) We should have a new or an empty directory available for the database backup to be restored.
+3) Enable trusted SSH authentication using public keys between the target server and the backup server.
+
+
+How to do it,
+
+1) $sudo mkdir /var/lib/pgsql/13/data/
+2) $ sudo chmod 0700 /var/lib/pgsql/13/data
+3) Create the pgBackRest configuration file that is the same as the backup server.
+
+ sudo bash -c 'cat << EOF > /etc/pgbackrest.conf
+ [global]
+ repo1-host=backupserver.percona.com
+ repo1-path=/backup_directory
+ repo1-retention-full=2
+ log-level-stderr=error
+ log-path=/backup/db/log
+ [percdb]
+ pg1-host=192.168.70.10
+ pg1-path=/var/lib/pgsql/13/data
+ pg1-port=5432
+ EOF'
+ 
+ 4) Restore backup of stanza to target database server 
+ pgbackrest restore --stanza=percdb --log-level-console=info
+
+5) Start the service 
+sudo systemctl start postgresql-13
+
+
+
+
+
+
+
+
+
