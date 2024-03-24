@@ -1,0 +1,7 @@
+- Constant monitoring is key to ensure healthy replication between primary and sandby.
+- Replication failure can happen any time due to multiple issues:
+   - network failure
+   - heavy load on primary
+   - heavy load on standby
+   - loss of standby
+   - other issues
