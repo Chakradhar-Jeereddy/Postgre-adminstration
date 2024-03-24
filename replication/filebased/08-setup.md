@@ -11,7 +11,10 @@ Syntax : ssh-copy-id  postgres@ipadress
 - Shutdown Master database 
 - Modify the content of postgres.conf file and edit parameters archive_on, archive_command and archive_timeout.
 ```
+Archive_mode: on
+archive_timeout: 60
 Archive_command: rsync -a %p postgres@ipaddress:/location of archive folder
+Note - Setting timeout for archiving on master having less workload can send empty files to stanby.
 ```
 
 - Initial Setup Standby Database:
