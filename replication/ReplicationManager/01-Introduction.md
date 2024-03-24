@@ -5,6 +5,7 @@
 - Repmgr provides single read/write primary server and on or more read-only standbys containing near-real time copies of the
    the primary server's database.
 - Repmgrd deamon is user to actively monitor serversin a replication cluster.
+- It is available only for windows and linux.
 
 ## Commponents of Repmgr
 - Repmgr: A commmand-line tool used to perform administrative tasks such as:
