@@ -8,3 +8,19 @@
 - Replication slots are of two types
      - Physical replication slots
      - Logical replication slots
+- How to create a physical replication slot.
+```
+     Syntax : select pg_create_physical_replication_slot(‘Standby’);
+```
+ - How to Monitor a replication slot.
+```
+     Syntax : select * from pg_replication_slots;
+```
+- How to delete a replication slot.
+```
+    Syntax : select pg_drop_replication_slot(‘standby’);
+```
+- How to create logical replication slot.
+```
+    Syntax: select pg_create_logical_replication_slot(‘Standby’);
+```
