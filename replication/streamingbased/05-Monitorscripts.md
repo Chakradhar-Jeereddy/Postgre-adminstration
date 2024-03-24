@@ -50,6 +50,7 @@ missing_in_mb|64.10
 ```
 psql> select pg_walfile_name('0/B000110');
 pg_walfile_name|000000000000001000000000c
+```
 - The stats related to the incoming replication can be monitored using
 ```
        Select * FROM pg_stat_wal_receiver;
