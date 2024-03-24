@@ -27,14 +27,14 @@ Pg_stat_replication view (primary server)
 ```
 - Get last write-ahead log location received and synced to disk by streaming replication. (Standby).
 ```
-      Select pg_last_wal_receive__lsn();
+       Select pg_last_wal_receive__lsn();
 ```
 - Get last write-ahead log location replayed during recovery. (Standby)
   ```
-      Select pg_last_wal_replay_lsn();
+       Select pg_last_wal_replay_lsn();
   ```
 - Get time stamp of last transaction replayed during recovery. (Standby)
   ```
-     Select pg_last_xact_replay_timestamp();
+       Select pg_last_xact_replay_timestamp();
   ```
 
