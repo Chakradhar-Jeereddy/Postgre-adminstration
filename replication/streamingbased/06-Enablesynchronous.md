@@ -22,5 +22,5 @@ select * from pg_stat_replication;
 state: async
 ```
 
-## Note: Use synchronous replication when standby reliable or when using more then one standby.
+## Note: Use synchronous replication when standby is reliable or when using more then one standby.
    
