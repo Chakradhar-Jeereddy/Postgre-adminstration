@@ -24,10 +24,18 @@ Note - Setting timeout for archiving on master having less workload can send emp
 
 - Steps:
   - Startup postgresql on Master database
+```
+systemctl start postgresql-14
+systemctl status postgresql-14
+```
 - Connect to the database using psql shell
 - Issue connect pg_start_backup
 ```
 Syntax : select pg_start_backup(‘dbrep’);
+pg_start_backup
+------------------
+0/A1000060
+dbrep is a label
 ```
 - Copy Data directory for master to standby.
 ```
