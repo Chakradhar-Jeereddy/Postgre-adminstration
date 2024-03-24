@@ -31,6 +31,7 @@ Pg_stat_replication view (primary server)
 ```
        Select pg_last_wal_receive__lsn();
        pg_last_wal_receive__lsn|0/7212A20
+```
 # Find the lag between master and standby based on current lsn and last received lsn
 ```
 psql> select * from pg_current_wal_lsn(); On master
