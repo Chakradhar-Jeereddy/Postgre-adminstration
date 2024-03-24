@@ -1,3 +1,5 @@
+![Architecture!](ARC.jpg)
+
 #Overview
 - WAL record chunks are streamed by database servers to keep data in sync.
 - The standby server connects to the master to receive the WAL chunks.
