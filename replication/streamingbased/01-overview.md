@@ -5,5 +5,5 @@
 - By default, streaming replication is asynchronous even though it also supports synchronous replication.
 
 ```
-Master----> wal sender --------------------------wal records----------------------------wal receiver-----> Slave server
+Master----> wal sender -------------------wal records------------------wal receiver-----> Slave server
 ```
