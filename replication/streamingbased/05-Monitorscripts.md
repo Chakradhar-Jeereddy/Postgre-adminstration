@@ -17,6 +17,7 @@ Pg_stat_replication view (primary server)
    sync_priority:    Priority of standby server being chosen as synchronous standby
    sync_state:       Sync State of standby (is it async or synchronous).
 ```
+[image!](repstatus.jpg)
 - Function to check whether standby is in recovery mode or not.
   ```
        Select pg_is_in_recovery();
