@@ -8,6 +8,7 @@
            ./pg_ctl promote -D /var/lib/pgsql/12/data
            Create a trigger file with the file name and path specified by the promote_trigger_file.
            SELECT pg_promote();  --> it returns 't', which indicates promoted to master.
+           SELECT pg_is_in_recovery();  -> it should return 'f'
  ```
 - Log entries after execution of promot command
 ```
@@ -16,3 +17,7 @@ terminating wal receiver process
 archive recovery complete
 database system is ready to accept connections
 ```
+
+## Re-establish replication
+- Build old master as new standby.
+- create replication slot in new primary
