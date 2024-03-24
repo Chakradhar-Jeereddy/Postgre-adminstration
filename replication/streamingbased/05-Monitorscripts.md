@@ -36,13 +36,15 @@ Pg_stat_replication view (primary server)
 ```
 psql> select * from pg_current_wal_lsn(); On master
 pg_current_wal_lsn| 0/B000110
+
 psql> select * from pg_last_wal_receive_lsn(); On standby
 pg_last_wal_receive_lsn|0/C0197F8
+
 psql> select pg_wal_lsn_diff('0/B000110','0/C0197F8');
 pg_wal_lsn_diff| 67313932 bytes
+
 psql> select round(67313932/pow(1024,2,0),2) missing_in_mb;
-missing_in_mb
-64.10
+missing_in_mb|64.10
 ```
 # Find the physical location of wal file in prod, based on current lsn
 ```
