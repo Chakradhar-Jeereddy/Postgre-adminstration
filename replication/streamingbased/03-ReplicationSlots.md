@@ -4,7 +4,7 @@
    reconnects again.
 - Replication slot came in with PostgreSQL9.4, before that wal_keep_segment parameter used to govern how many wal files need to
   be maintained.
-- The slots needs to be created manually and the default value is 10.
+- The slots needs to be created manually and the maximum slots allowed value is 10.
 - Replication slots are of two types
      - Physical replication slots
      - Logical replication slots
