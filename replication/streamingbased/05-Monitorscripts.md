@@ -17,3 +17,24 @@ Pg_stat_replication view (primary server)
    sync_priority:    Priority of standby server being chosen as synchronous standby
    sync_state:       Sync State of standby (is it async or synchronous).
 ```
+- Function to check whether standby is in recovery mode or not.
+  ```
+       Select pg_is_in_recovery();
+  ```
+- The stats related to the incoming replication can be monitored using
+```
+       Select * FROM pg_stat_wal_receiver;
+```
+- Get last write-ahead log location received and synced to disk by streaming replication. (Standby).
+```
+      Select pg_last_wal_receive__lsn();
+```
+- Get last write-ahead log location replayed during recovery. (Standby)
+  ```
+      Select pg_last_wal_replay_lsn();
+  ```
+- Get time stamp of last transaction replayed during recovery. (Standby)
+  ```
+     Select pg_last_xact_replay_timestamp();
+  ```
+
