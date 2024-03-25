@@ -37,7 +37,7 @@
      primary removed from the replication cluster ina controlled manner. The repmgr command line client provides this
      functionality.
 - Witness server
-  repmgr provides functionality to set up a so-called "witness server" to assist in determining a new primary server
+    - repmgr provides functionality to set up a so-called "witness server" to assist in determining a new primary server
   in a failover situation with more than one standby. The witness server itself is not part of the replication cluster,
   although it does contain a copy of the repmgr metadata schema.
 
