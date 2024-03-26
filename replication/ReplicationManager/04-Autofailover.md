@@ -31,7 +31,7 @@ Export PATH=/us/pgsql-12/bin:$PATH
 3)	Rejoin the node .
 4)	On Standby server ( which is the new primary) perform a checkpoint
 ```
-./rpmgr -f /var/lib/pgsql/repmgr.conf node service --action=stop --checkpoint
+./rpmgr -f /var/lib/pgsql/repmgr.conf node service --action=stop --checkpoint (to write current transactions to wal file) 
 ``` 
 5)	Start postgresql on standby
 6)	Now execute node join on primary with dry run to check everything is working fine
