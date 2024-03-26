@@ -37,6 +37,7 @@ Export PATH=/us/pgsql-12/bin:$PATH
 6)	Now execute node join on primary with dry run to check everything is working fine
 ```
 ./repmgr node rejoin -f /var/lib/pgsql/repmgr.conf -d 'host=192.168.1.9 user=repmgr dbname=repmgr --force-rewind
+```
 --config-files=postgresql.local.conf,postgresql.conf --verbose --dry-run
 7)	Perform the node join operation.
 8)	Now check the show cluster.
