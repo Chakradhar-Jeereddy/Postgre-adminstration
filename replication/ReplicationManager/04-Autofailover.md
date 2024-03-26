@@ -1,3 +1,5 @@
+![image!](repevents.jpg)
+
 # Case 2:
 ## Objective: Test automatic failover and ensure primary is joined back to repmgr after initial failover
 ### Instance : 
