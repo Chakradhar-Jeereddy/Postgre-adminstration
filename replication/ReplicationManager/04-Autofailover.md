@@ -1,6 +1,5 @@
 # Case 2:
 ## Objective: Test automatic failover and ensure primary is joined back to repmgr after initial failover
-
 ### Instance : 
 ### Primary : 192.168.1.8
 ### Standby 192.168.1.9
