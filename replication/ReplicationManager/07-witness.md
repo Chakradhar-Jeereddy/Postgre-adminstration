@@ -1,4 +1,4 @@
-![witness!](witness.jpg)
+![Witness!](witness.jpg)
 
 - The job of the witness server is to prevent split brain syndrom
 - Although primary is active, the standby promots itself to primary when it can't communicate to primary due to network issue.
