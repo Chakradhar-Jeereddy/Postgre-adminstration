@@ -1,4 +1,4 @@
-## Failover:
+## Failover: 
 - Shutdown postgresql on master and check whether it affects standby
 - Test replication
 ```
