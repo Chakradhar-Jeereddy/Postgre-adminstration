@@ -7,7 +7,7 @@ mkdir -p /u03/app/16.2/wal_files
 -- Change ownership to postgres
 ```
 chown -h postgres:postgres /u03/app/16.2/wal_files
-
+```
 -- Stop postgresql
 ```
 ./pg_ctl stop
