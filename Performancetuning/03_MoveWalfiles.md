@@ -21,7 +21,7 @@ rsync -av /u02/app/16.2/data/pg_wal/* /u03/app/16.2/wal_files
 -- Check all files are synced
 ```
 ls -la  /u03/app/16.2/wal_files
-
+```
 -- Take a backup of pg_wal folder
 ```
 mv /u02/app/16.2/data/pg_wal /u02/app/16.2/data/pg_wal-backup
@@ -31,8 +31,6 @@ mv /u02/app/16.2/data/pg_wal /u02/app/16.2/data/pg_wal-backup
 ```
 sudo ln -s /u03/app/16.2/wal_files/ /u02/app/16.2/data/pg_wal
 ```
-
-
 -- Start Postgresql
 ```
 ./pg_ctl start
