@@ -16,7 +16,7 @@ chown -h postgres:postgres /u03/app/16.2/wal_files
 -- rsync all files from $PGDATA/pg_wal to new location
 ```
 rsync -av /u02/app/16.2/data/pg_wal/* /u03/app/16.2/wal_files
-
+-- -a is archive mode, preserves permissions,timestamp,links,owners, groups,copies recursively
 ```
 -- Check all files are synced
 ```
