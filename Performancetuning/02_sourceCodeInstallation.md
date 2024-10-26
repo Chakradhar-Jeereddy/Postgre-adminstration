@@ -52,12 +52,14 @@ or
 make install-world 
 or 
 make install-world-bin
-
+```
 -- Build contrib module:
+```
  cd contrib
  make
 ```
 -- Install contrib module: 
+```
 make install
 ```
 
