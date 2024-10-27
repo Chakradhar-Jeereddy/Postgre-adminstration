@@ -275,3 +275,15 @@ LIMIT 10;
  pg_statistic          |     10 |       29 |    15
 
 ```
+
+```
+-- To use pg_buffercache you need pg_monitor role or supper user
+```
+\du
+ Role name |                         Attributes
+-----------+------------------------------------------------------------
+ postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS
+
+grant pg_monitor to repuser;
+drop extension pg_buffercache;
+```
