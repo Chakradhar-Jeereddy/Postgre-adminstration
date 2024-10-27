@@ -30,6 +30,10 @@ c) Move old objects from pg_default to respective tablespaces.
 
 2) I have just installed Postgresql and yet to create a database.
   Create a new tablespace and make it default in postgresql.conf and restart the cluster.
+#default_tablespace = ''                # a tablespace name, '' uses the default
+#temp_tablespaces = ''                  # a list of tablespace names, '' uses
+                                        # only default tablespace
+
   All objects goes into the default tablespace from the start.
  -- Create database sales owner salesapp tablespace sales; (Good for multiple databases).
 
