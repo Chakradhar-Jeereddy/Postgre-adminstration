@@ -62,9 +62,9 @@ The connection to the server was lost. Attempting reset: Succeeded.
 
 ```
 ### Below parameters can be set at cluster level
-* tcp_keeplives_idle
-* tcp_keeplives_interval
-* tcp_keeplives_count
+* tcp_keepalives_idle
+* tcp_keepalives_interval
+* tcp_keepalives_count
 * client_connection_check_interval
 * Authentication_timeout
 
