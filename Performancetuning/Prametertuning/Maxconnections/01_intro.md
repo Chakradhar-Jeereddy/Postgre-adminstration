@@ -1,5 +1,5 @@
 * The maximum number of concurrent connections to the database server.
-* The default is typically 100 connections.
+* The default is typically 100 connections. 97 for users and 3 for supper users.
 * Set to the maximum number of connections that we expect to be need at peak load.
 * Each connection uses shared_buffer memory, as well as additional non-shared memory
 * Once the limit is reached application will throw “system out of memory” error.
