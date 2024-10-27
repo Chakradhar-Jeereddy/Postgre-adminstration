@@ -1,9 +1,10 @@
--- PG_BUFFERCACHE
+-- PG_BUFFERCACHE to inspect shared_buffers
 ```
 The pg_buffercache module provides a means for examining what's happening in the shared buffer cache in real time.
  use is restricted to superusers and roles with privileges of the pg_monitor role. Access may be granted to others using GRANT.
 ```
-Test Cases:
+-- Test Cases:
+```
 How to install pg_buffercache: (Linux user please install contrib module)
 Check if extention is installed using the command \dx
 postgres=# \dx
@@ -37,7 +38,6 @@ postgres=# \dx
 (2 rows)
 
 -- Extendtion installed successfully to examine workload
-
 ```
 -- Lets run some workload using pg_bench
 ```
