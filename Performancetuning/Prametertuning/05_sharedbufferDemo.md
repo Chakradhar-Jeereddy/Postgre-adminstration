@@ -1,4 +1,17 @@
 ```
+Generate tables in postgresql database using pgbench
+../init/bin/pgbench -i
+postgres=# \dt
+              List of relations
+ Schema |       Name       | Type  |  Owner
+--------+------------------+-------+----------
+ public | pgbench_accounts | table | postgres
+ public | pgbench_branches | table | postgres
+ public | pgbench_history  | table | postgres
+ public | pgbench_tellers  | table | postgres
+ public | test1            | table | postgres
+
+
 Work Mem :  4MB Default
 select a.aid from pgbench_accounts a, pgbench_accounts b where a.bid=b.bid order by a.bid limit 10;
 SET work_mem = '64MB';
