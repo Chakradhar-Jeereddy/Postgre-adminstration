@@ -3,7 +3,7 @@
 -- Number of connected user:
 ```
 SELECT usename AS username FROM pg_stat_activity where usename!=''  GROUP BY usename;
-
+```
 --  Which user and how many concurrent connections:
 ```
 SELECT usename AS username, count(*) AS concurrent_statements
