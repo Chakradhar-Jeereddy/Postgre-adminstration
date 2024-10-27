@@ -1,22 +1,32 @@
 
--- Pg_prewarm Extension
-This extension help us to understand how the shared buffer works and in sizing it better.
-Excract the maximum performance from this memory component
+* Pg_prewarm Extension
+* This extension help us to understand how the shared buffer works and in sizing it better.
+* Excract the maximum performance from this memory component
 
--- The pg_prewarm module provides a convenient way to load relation data into PostgreSQL buffer cache.  
+* The pg_prewarm module provides a convenient way to load relation data into PostgreSQL buffer cache.  
     Prewarming can be performed in two ways
     1) Manually using the pg_prewarm function
     2) Performed automatically by including pg_prewarm in shared_preload_libraries. 
---- In case of auto prewarm, system will run a background worker which periodically 
+* In case of auto prewarm, system will run a background worker which periodically 
     records the contents of shared buffers in a file called autoprewarm.blocks 
     and will be using 2 background workers, reload those same blocks after a restart.
 
--- Prerequisites:
+* Prerequisites:
    * Contrib module needs to be installed in Linux for pg_prewarm extension.
 
 -- Manual Prewarm:
 ```
-CREATE EXTENSION pg_prewarm;
+postgres=# create extension pg_prewarm;
+CREATE EXTENSION
+postgres=# \dx
+                      List of installed extensions
+      Name      | Version |   Schema   |           Description
+----------------+---------+------------+---------------------------------
+ pg_buffercache | 1.4     | public     | examine the shared buffer cache
+ pg_prewarm     | 1.2     | public     | prewarm relation data
+ plpgsql        | 1.0     | pg_catalog | PL/pgSQL procedural language
+(3 rows)
+
 
 -- Check how many blocks of table available in pg_buffercache.
 SELECT count(*)
