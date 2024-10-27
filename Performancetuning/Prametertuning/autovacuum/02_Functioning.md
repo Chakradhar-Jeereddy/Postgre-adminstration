@@ -20,6 +20,27 @@
    * Butter execution plan.
 
 -- How does Auto vacuum works
+  * Tables are autovacuumed by default when 20% of the rows and 50 rows are modified.
+  * Tables are analyzed when 10% of rows plus 50 rows are modified
+   ```
+postgres=# show Autovacuum_vacuum_scale_factor;
+-[ RECORD 1 ]------------------+----
+autovacuum_vacuum_scale_factor | 0.2
+
+postgres=#  show Autovacuum_vacuum_threshold;
+-[ RECORD 1 ]---------------+---
+autovacuum_vacuum_threshold | 50
+
+postgres=# show Autovacuum_analyze_scale_factor;
+-[ RECORD 1 ]-------------------+----
+autovacuum_analyze_scale_factor | 0.1
+
+postgres=# show Autovacuum_analyze_threshold;
+-[ RECORD 1 ]----------------+---
+autovacuum_analyze_threshold | 50
+
+```
+  * Default values are sufficent for small deployments.
   * Stage 1 - It scans the table for dead tuples, picks the transaction id of that dead tuple and places them in
   * Miantenance work mem/Autovacuum work mem (transaction IDs of dead tuple are stored.
   * Stage 2 - It checks the indexes of that perticular table with transaction id and delete those dead rows.
@@ -138,8 +159,19 @@ Two approches
 
 
 
+The % threshold tales longer time to trigger as the tables grow larger.
+Performance degrades significantly before the auto vacuum and analyzing occurs.
 
-
+Never change the thresholds at cluster table.
+The scale factor can be reduced only for larger tables.
+```
+alter table warehouse set (Autovacuum_vacuum_scale_factor=0.1);
+alter table warehouse set (Autovacuum_vacuum_threshold=500);
+alter table warehouse set (Autovacuum_anlyze_scale_factor=0.1);
+alter table warehouse set (Autovacuum_anlyze__threshold=500);
+```
+The vacuum is triggered when 10% rows are modifed and 500 row are modified, reduced from 20$% to 10$.
+The analyze is triggered when 10% rows are modifed and 500 row are modified
 
 
 
