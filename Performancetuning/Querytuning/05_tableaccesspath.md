@@ -94,9 +94,6 @@ idth=352) (actual time=0.017..0.018 rows=1 loops=1)
 ```
  explain analyze select tid from pgbench_tellers where tid<10;
                                                                 QUERY PLAN
-
-------------------------------------------------------------------------------------
--------------------------------------------------------
  Index Only Scan using pgbench_tellers_pkey on pgbench_tellers  (cost=0.27..4.43 row
 s=9 width=4) (actual time=0.016..0.018 rows=9 loops=1)
    Index Cond: (tid < 10)
