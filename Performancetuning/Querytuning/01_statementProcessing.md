@@ -14,6 +14,6 @@
 
 2) High level steps
 
-Parse: Check Syntax, break query in tokens, Generate Parse tree and identify query type.
-Optimizer/Planner: Generates optimal plan, uses database statistics, calculate query cost, choose best plan.
-Execute: Execute Query based on execution plan.
+   - Parse: Check Syntax, break query in tokens, Generate Parse tree and identify query type.
+   - Optimizer/Planner: Generates optimal plan, uses database statistics, calculate query cost, choose best plan.
+   - Execute: Execute Query based on execution plan.
