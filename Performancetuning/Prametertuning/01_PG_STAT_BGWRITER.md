@@ -49,8 +49,40 @@ Backends ----> buffer_backends : Number of buffers written directly by the backe
 
 stats_reset : Time at which these statistics were last reset.
 Command to Reset Statistics
+```
 Select pg_stat_reset_shared('bgwriter');
+postgres=# select * from pg_stat_bgwriter;;
+-[ RECORD 1 ]---------+------------------------------
+checkpoints_timed     | 557
+checkpoints_req       | 29
+checkpoint_write_time | 897709
+checkpoint_sync_time  | 1155
+buffers_checkpoint    | 16939
+buffers_clean         | 1
+maxwritten_clean      | 0
+buffers_backend       | 411290
+buffers_backend_fsync | 0
+buffers_alloc         | 198264
+stats_reset           | 2024-10-26 12:44:10.613136-04
 
+postgres=# select pg_stat_reset_shared('bgwriter');
+-[ RECORD 1 ]--------+-
+pg_stat_reset_shared |
+
+postgres=# select * from pg_stat_bgwriter;
+-[ RECORD 1 ]---------+------------------------------
+checkpoints_timed     | 0
+checkpoints_req       | 0
+checkpoint_write_time | 0
+checkpoint_sync_time  | 0
+buffers_checkpoint    | 0
+buffers_clean         | 0
+maxwritten_clean      | 0
+buffers_backend       | 0
+buffers_backend_fsync | 0
+buffers_alloc         | 9
+stats_reset           | 2024-10-28 21:31:42.075081-04
+```
 
 
 
