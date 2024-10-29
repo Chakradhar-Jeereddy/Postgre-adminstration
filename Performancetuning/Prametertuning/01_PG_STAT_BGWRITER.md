@@ -1,4 +1,4 @@
-pg_stat_bgwriter is a view which provides metrics about how Postgresql flushes dirty buffers to the disk?
+* pg_stat_bgwriter is a view which provides metrics about how Postgresql flushes dirty buffers to the disk.
 
 There are 3 ways how the dirty buffers are flushed.
 Checkpoint - buffer_checkpoint(column)
@@ -6,23 +6,9 @@ background_writer --buffer_clean
 backends ------> buffer_backends
 
  A comparison of buffers_checkpoint, buffers_clean, and buffers_backend is insightful for understanding 
- the distribution of writes during checkpoints, 
- by the background writer, and in backend sessions, respectively.
+ the distribution of writes during checkpoints, by the background writer, and in backend sessions, respectively.
 
-
- PG_STAT_BGWRITER
-
-pg_stat_bgwriter is a view which provides metrics about how PostgreSQL flushes dirty buffers to the disk.
-There are 3 ways how the dirty buffers are flushed.
- * Checkpoint --> buffer_checkpoint (column)
- * Background_Writer ---> buffer_clean
- * Backends ----> buffer_backends
-
- A comparison of buffers_checkpoint, buffers_clean, and buffers_backend is insightful for understanding the distribution of writes during checkpoints, by the background writer, and in backend sessions, respectively.
-
-Checkpoint -> Timed or Requested. 
-Timed checpoints basically happens due to when the checkpoint_timeout is achieved and this are basically desirable.
-Requested checkpoints are inherently unpredictable and mostly happens if max_wal_size is breached. 
+Checkpoint -> Timed or Requested. Timed checpoints basically happens due to when the checkpoint_timeout is achieved and this are basically desirable. Requested checkpoints are inherently unpredictable and mostly happens if max_wal_size is breached. 
 
 Tip:
 Aim to keep majority of checkpoints as timed checkpoints and reduce requested checkpoint.
