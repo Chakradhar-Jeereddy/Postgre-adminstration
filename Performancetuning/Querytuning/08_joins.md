@@ -174,15 +174,99 @@ ws=20000 loops=1)
 Note - There is just 1 batch and less execution time.
 
 ```
-- merge join: The (sort) merge join combines two sorted lists like a zipper. Both sides of the join must be presorted.
+- merge join: This is very fast for large tables, but input for join should be presorted.
+- THe join columns should have indexes to perform index looks for outer and inner table.
  - Can only be used for equality join conditions.
  - Generally, the most performant for large data sets.
  - Requires ordered inputs - which can require slow sorts or index scans.
  - Slow to start up, as all index tuples are read and sorted.
+ - All index tuples are first read and sorted.
 
 - Statement: (Create Index)
 ```
-explain analyze select * from emp e, dept d where e.deptid = d.deptid;
+create index idx_dept1 on emp(deptid);
+create index idx_dept2 on dept(deptid);
+postgres=# explain analyze select * from emp e, dept d where e.deptid = d.deptid;
+                                                            QUERY PLAN
+ Merge Join  (cost=0.61..1535.86 rows=20000 width=16) (actual time=0.018..10.375 rows=2000
+0 loops=1)
+   Merge Cond: (e.deptid = d.deptid)
+   ->  Index Scan using idx_dept1 on emp e  (cost=0.29..1531.29 rows=50000 width=8) (actua
+l time=0.005..3.162 rows=20001 loops=1)
+   ->  Index Scan using idx_dept2 on dept d  (cost=0.29..620.29 rows=20000 width=8) (actua
+l time=0.009..2.692 rows=20000 loops=1)
+ Planning Time: 0.250 ms
+ Execution Time: 10.940 ms
+(6 rows)
+
+postgres=# explain analyze select * from dept d,emp e where e.deptid = d.deptid;
+                                                            QUERY PLAN
+ Merge Join  (cost=0.61..1535.86 rows=20000 width=16) (actual time=0.014..9.225 rows=20000
+ loops=1)
+   Merge Cond: (d.deptid = e.deptid)
+   ->  Index Scan using idx_dept2 on dept d  (cost=0.29..620.29 rows=20000 width=8) (actua
+l time=0.006..2.360 rows=20000 loops=1)
+   ->  Index Scan using idx_dept1 on emp e  (cost=0.29..1531.29 rows=50000 width=8) (actua
+l time=0.004..2.455 rows=20001 loops=1)
+ Planning Time: 0.135 ms
+ Execution Time: 9.775 ms
+(6 rows)
+
+set enable_mergejoin=off;
+explain analyze select * from dept d,emp e where e.deptid = d.deptid;
+                                                      QUERY PLAN
+ Hash Join  (cost=539.00..1648.50 rows=20000 width=16) (actual time=3.732..16.277 rows=200
+00 loops=1)
+   Hash Cond: (e.deptid = d.deptid)
+   ->  Seq Scan on emp e  (cost=0.00..722.00 rows=50000 width=8) (actual time=0.013..2.978
+ rows=50000 loops=1)
+   ->  Hash  (cost=289.00..289.00 rows=20000 width=8) (actual time=3.656..3.657 rows=20000
+ loops=1)
+         Buckets: 32768  Batches: 1  Memory Usage: 1038kB
+         ->  Seq Scan on dept d  (cost=0.00..289.00 rows=20000 width=8) (actual time=0.005
+..1.334 rows=20000 loops=1)
+ Planning Time: 0.141 ms
+ Execution Time: 16.923 ms   => expensive then merge
+(8 rows)
+
+
+postgres=# explain analyze select * from dept d,emp e where e.deptid < d.deptid; non equi join so nested loop.
+                                                             QUERY PLAN
+ Nested Loop  (cost=0.29..9174383.00 rows=333333333 width=16) (actual time=0.059..59231.57
+1 rows=199990000 loops=1)
+   ->  Seq Scan on dept d  (cost=0.00..289.00 rows=20000 width=8) (actual time=0.035..10.3
+05 rows=20000 loops=1)
+   ->  Index Scan using idx_dept1 on emp e  (cost=0.29..292.03 rows=16667 width=8) (actual
+ time=0.009..1.744 rows=10000 loops=20000)
+         Index Cond: (deptid < d.deptid)
+ Planning Time: 1.102 ms
+ Execution Time: 66978.242 ms   => very expensive.
+
+set enable_hashjoin=off;
+set enable hashjoin=on;
+set enable_mergejoin=on;
+set enable_mergejoin=off;
+```
+
+- Aggregation
+```
+postgres=# explain select count(*) from dept;
+                           QUERY PLAN
+----------------------------------------------------------------
+ Aggregate  (cost=339.00..339.01 rows=1 width=8)
+   ->  Seq Scan on dept  (cost=0.00..289.00 rows=20000 width=0)
+(2 rows)
+
+```
+- limit
+```
+postgres=# explain select count(*) from dept limit 10;
+                              QUERY PLAN
+----------------------------------------------------------------------
+ Limit  (cost=339.00..339.01 rows=1 width=8)
+   ->  Aggregate  (cost=339.00..339.01 rows=1 width=8)
+         ->  Seq Scan on dept  (cost=0.00..289.00 rows=20000 width=0)
+(3 rows)
 ```
 
 
