@@ -267,7 +267,9 @@ postgres=# explain select count(*) from dept limit 10;
    ->  Aggregate  (cost=339.00..339.01 rows=1 width=8)
          ->  Seq Scan on dept  (cost=0.00..289.00 rows=20000 width=0)
 (3 rows)
-
+```
+- sort
+```
 postgres=# explain select deptid,count(*) from dept group by deptid;
                            QUERY PLAN
 ----------------------------------------------------------------
