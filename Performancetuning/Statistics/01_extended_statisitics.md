@@ -26,6 +26,4 @@
      - A higher <number> will signal the server to gather and update more statistics but may have slow auto vacuum
      - and analyze operations on stat tables.
      - Higher number only useful for tables with large irregular data distribution.
-  
-  - 
 
