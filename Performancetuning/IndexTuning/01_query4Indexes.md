@@ -115,8 +115,9 @@ FROM pg_statio_user_indexes;
 Note - Id reads are mode, increase shared buffer or prewarm the index
 ```
 - How many pages tables in cache
-  ```
-  postgres=#  SELECT sum(heap_blks_read) as idx_read, sum(heap_blks_hit) as idx_hit  FROM pg_statio_user_tables;
+```
+postgres=#  SELECT sum(heap_blks_read) as idx_read, sum(heap_blks_hit) as idx_hit
+FROM pg_statio_user_tables;
  idx_read | idx_hit
 ----------+---------
    988231 | 3788058
