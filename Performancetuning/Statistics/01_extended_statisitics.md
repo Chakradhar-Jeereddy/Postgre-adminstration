@@ -11,12 +11,12 @@
      - Extended statisics
 
   - Extended statistics: Analyze commands gether and store statistics on a per-column per-table basis and therefore can't
-  -                      capture any information about cross-column correlation.
-  -                      It ideally treats each column individually and does not address dependencies between columns.
-  -                      Multiple corelated columns used in a query often results in bad execution plans.
-  -                      Normall stats will not gather relation between the columns.
-  -                      Create statistics command can be used to create extended statistics for correlated columns.
-  -                      When the columns are more inter related.
+          - capture any information about cross-column correlation.
+          - It ideally treats each column individually and does not address dependencies between columns.
+          - Multiple corelated columns used in a query often results in bad execution plans.
+          - Normall stats will not gather relation between the columns.
+          - Create statistics command can be used to create extended statistics for correlated columns.
+          - When the columns are more inter related.
  
   - Controlling statistics collection
      - PostgreSQL gather and maintain table and column level statistics.
