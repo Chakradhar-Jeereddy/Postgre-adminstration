@@ -45,17 +45,20 @@ pg_relation_size(indexrelid) DESC;
 - Does table needs an Index:
 ```
 SELECT relname, seq_scan-idx_scan AS too_much_seq, CASE WHEN seq_scan-idx_scan>0 
-THEN 'Missing/Ineff Index' 
-ELSE 'OK' END, 
-pg_relation_size(relname::regclass) AS rel_size, seq_scan, idx_scan FROM pg_stat_all_tables WHERE schemaname='public' AND pg_relation_size(relname::regclass)>80000 ORDER BY too_much_seq DESC;
+THEN 'Missing/Ineff Index' ELSE 'OK' END, pg_relation_size(relname::regclass) AS rel_size,
+seq_scan, idx_scan FROM pg_stat_all_tables WHERE schemaname='public'
+AND pg_relation_size(relname::regclass)>80000 ORDER BY too_much_seq DESC;
 ```
 - How many indexes are in cache:
 ```
-SELECT sum(idx_blks_read) as idx_read, sum(idx_blks_hit) as idx_hit FROM pg_statio_user_indexes;
+SELECT sum(idx_blks_read) as idx_read, sum(idx_blks_hit) as idx_hit
+FROM pg_statio_user_indexes;
 ```
 - Index % usage:
 ```
-SELECT relname, 100 * idx_scan / (seq_scan + idx_scan) percent_of_times_index_used, n_live_tup rows_in_table FROM pg_stat_user_tables WHERE (seq_scan + idx_scan) > 0 ORDER BY n_live_tup DESC;
+SELECT relname, 100 * idx_scan / (seq_scan + idx_scan) percent_of_times_index_used,
+n_live_tup rows_in_table FROM pg_stat_user_tables WHERE (seq_scan + idx_scan) > 0
+ORDER BY n_live_tup DESC;
 ```
 - Duplicate Indexes:
 ```
