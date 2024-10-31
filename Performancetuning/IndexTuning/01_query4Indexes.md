@@ -157,8 +157,9 @@ SELECT ni.nspname || '.' || ct.relname AS "table",
  WHERE ct.relname NOT LIKE 'pg_%' AND
        NOT i.indisprimary
  ORDER BY 1, 2, 3;
-
-Useful Functions to Find size of Objects:
+```
+```
+- Useful Functions to Find size of Objects:
 pg_size_pretty() function to format the size.
 pg_relation_size() function to get the size of a table.
 pg_total_relation_size() function to get the total size of a table.
