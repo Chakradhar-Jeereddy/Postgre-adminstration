@@ -1,7 +1,8 @@
 ## Demo
 - pg_statistic is internal table, data wont be readable.
 - pg_stats is a view and data will be in readable format.
-- select * from pg_stats where tablename='pgbench_tellers';
+```
+select * from pg_stats where tablename='pgbench_tellers';
 schemaname             | public   => schema name
 tablename              | pgbench_tellers
 attname                | tid        => Attribute/column name
