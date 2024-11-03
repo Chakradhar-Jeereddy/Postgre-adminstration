@@ -108,9 +108,8 @@ s=47 loops=1)
  Planning Time: 0.076 ms
  Execution Time: 0.133 ms
 (5 rows)
-```
 
-Query Rewrite:
+- Query Rewrite:
 explain analyze select firstname from staff where firstname like 'ab%';
  Seq Scan on staff  (cost=0.00..41.94 rows=1 width=7) (actual time=0.010..0.202 rows
 =14 loops=1)  => returned only 14 rows
