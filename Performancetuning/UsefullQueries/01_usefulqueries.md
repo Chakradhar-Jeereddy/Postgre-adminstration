@@ -50,11 +50,14 @@ order by
 
 - Show running queries
 ```
-SELECT pid, age(query_start, clock_timestamp()), usename, query  FROM pg_stat_activity WHERE query != '<IDLE>'
+SELECT pid, age(query_start, clock_timestamp()), usename, query
+FROM pg_stat_activity WHERE query != '<IDLE>'
 AND query NOT ILIKE '%pg_stat_activity%' ORDER BY query_start desc;
 ```
 - Queries which are running for more than 2 minutes
-SELECT now() - query_start as "runtime", usename, datname,state, query FROM pg_stat_activity
+```
+SELECT now() - query_start as "runtime", usename, datname,state, query
+ FROM pg_stat_activity
  WHERE now() - query_start > '2 minutes'::interval ORDER BY runtime DESC;
 ```
 - Queries which are running for more than 9 seconds
