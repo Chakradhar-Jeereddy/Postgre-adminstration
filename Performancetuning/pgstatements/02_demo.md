@@ -87,7 +87,9 @@ LIMIT 10;
 - Detail I/o Information:
 ```
 select
-	shared_blks_hit + shared_blks_read + shared_blks_dirtied + shared_blks_written + local_blks_hit + local_blks_read + local_blks_dirtied + local_blks_written + temp_blks_read + temp_blks_written as total_buffers,
+	shared_blks_hit + shared_blks_read + shared_blks_dirtied + shared_blks_written +
+local_blks_hit + local_blks_read + local_blks_dirtied + local_blks_written + temp_blks_read +
+temp_blks_written as total_buffers,
 	(total_exec_time + total_plan_time)::int as total_time,
 	calls,
 	shared_blks_hit as sbh,
