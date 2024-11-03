@@ -18,14 +18,15 @@ LIMIT 10;
 - Top Queries based on Cpu Usage:
 ```
 SELECT 
-        pss.userid,
-        pss.dbid,
-        pd.datname as db_name,
-        round((pss.total_exec_time + pss.total_plan_time)::numeric, 2) as total_time, 
-        pss.calls, 
-        round((pss.mean_exec_time+pss.mean_plan_time)::numeric, 2) as mean, 
-        round((100 * (pss.total_exec_time + pss.total_plan_time) / sum((pss.total_exec_time + pss.total_plan_time)::numeric) OVER ())::numeric, 2) as cpu_portion_pctg,
-        substr(pss.query, 1, 200) short_query
+pss.userid,
+pss.dbid,
+pd.datname as db_name,
+round((pss.total_exec_time + pss.total_plan_time)::numeric, 2) as total_time, 
+pss.calls, 
+round((pss.mean_exec_time+pss.mean_plan_time)::numeric, 2) as mean, 
+round((100 * (pss.total_exec_time + pss.total_plan_time) /
+sum((pss.total_exec_time + pss.total_plan_time)::numeric) OVER ())::numeric, 2) as cpu_portion_pctg,
+substr(pss.query, 1, 200) short_query
 FROM pg_stat_statements pss, pg_database pd 
 WHERE pd.oid=pss.dbid
 ORDER BY (pss.total_exec_time + pss.total_plan_time)
