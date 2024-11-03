@@ -24,8 +24,20 @@ postgres-# WHERE attrelid = 'pgbench_tellers'::regclass::oid;
  ```
 - Find hidden columns of a table which stores before image
 ```
-SELECT attname, format_type (atttypid,atttypmod) FROM pg_attribute
-WHERE attrelid = 'foo.bar'::regclass::oid;
+postgres=# SELECT attname, format_type (atttypid,atttypmod) FROM pg_attribute
+postgres-# WHERE attrelid = 'pgbench_tellers'::regclass::oid;
+ attname  |  format_type
+----------+---------------
+ tableoid | oid
+ cmax     | cid
+ xmax     | xid
+ cmin     | cid
+ xmin     | xid
+ ctid     | tid
+ tid      | integer
+ bid      | integer
+ tbalance | integer
+ filler   | character(84)
 ```
 - Find the transaction id
 ```
