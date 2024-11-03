@@ -6,14 +6,21 @@
 - tableoid is hidden coulmn in each table which containts the oid of the table also stored in pg_class
 - Find OID and schema name of the table
 ```
-SELECT pc.oid, pn.nspname, pc.relname
- FROM pg_class pc
- JOIN pg_namespace pn ON pc.relnamespace = pn.oid
- WHERE pn.nspname = 'foo'
- AND pc.relname = 'bar';
- oid | nspname | relname
--------+---------+---------
- 31239 | foo | bar
+postgres=# SELECT attname, format_type (atttypid,atttypmod) FROM pg_attribute
+postgres-# WHERE attrelid = 'pgbench_tellers'::regclass::oid;
+ attname  |  format_type
+----------+---------------
+ tableoid | oid
+ cmax     | cid
+ xmax     | xid
+ cmin     | cid
+ xmin     | xid
+ ctid     | tid
+ tid      | integer
+ bid      | integer
+ tbalance | integer
+ filler   | character(84)
+
  ```
 - Find hidden columns of a table which stores before image
 ```
