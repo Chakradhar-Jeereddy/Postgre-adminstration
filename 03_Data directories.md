@@ -1,5 +1,6 @@
+```
 base*           - database and objects are stored in this directory.
-current_lofiles - postgres writes the errors to files under this directory.
+current_lofiles - Stores the location of the current log files.
 global*         - It is used to store cluster wide objects such as users, roles,databases,tablespaces and toast tables.
 log*            - Default directory to store logs, it can be changed using the parameter log_directory without restart.
 pg_commit_ts*   - Stores information about commited transactions such as timestamps.
@@ -30,3 +31,4 @@ the value that's set in the postgresql.auto.conf file is considered by PostgreSQ
 postmaster.opts - This file contains the command that's used to start the PostgreSQL cluster.
 postmaster.pid* - This file contains data such as the process ID of the postmaster process, the data directory's location, port numbers, and the
 connection's acceptance state of the cluster.
+```
