@@ -1,12 +1,12 @@
 - Cluster restart is required to enabl archiving mode.
 ```
+$ psql -c "show archive_mode"
+$ psql -c "ALTER SYSTEM SET archive_mode TO 'ON'"
 $ pg_ctl -D $PGDATA restart -mf
 $ mkdir -p /backups/archive
 $ chown postgres:postgres /backups/archive
 $ psql -c "ALTER SYSTEM SET archive_command TO 'cp %p /backups/archive/%f'"
 $ psql -c "select pg_reload_conf()"
-$ psql -c "show archive_mode"
-$ psql -c "ALTER SYSTEM SET archive_mode TO 'ON'"
 ```
 - How tos
 
