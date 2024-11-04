@@ -1,25 +1,34 @@
-#To prevent I/O bottlenecks need to keep wals and data on different disks(for transaction intensive database)
-#This operation requires downtime
-1) Create directory and give permissions to postgres user
-  # mkdir -p /wals
-  # chown postgres:postgres /wals
-  # pg_ctl -D $PGDATA stop -mf
-  
-2) Move all the existing WALs and the archive_status directory inside pg_wal to the new directory on another disk. Make sure that pg_wal is empty and everything is moved to a new directory:
+- To prevent I/O bottlenecks need to keep wals and data on different
+  disks(for transaction intensive database)
+- This operation requires downtime
+   1) Create directory and give permissions to postgres user
+  ```
+     mkdir -p /wals
+     chown postgres:postgres /wals
+     pg_ctl -D $PGDATA stop -mf
+  ```
+  2) Move all the existing WALs and the archive_status directory inside pg_wal
+     to the new directory on another disk. Make sure that pg_wal is empty and everything is moved
+     to a new directory:
+```
   $ mv $PGDATA/pg_wal/* /wals
-  Use rsync to avoid a huge downtime while copying a huge number of WAL segments to a different disk.
-  $ rsync -avzh $PGDATA/pg_wal/ /wals
+```
+- Use rsync to avoid a huge downtime while copying a huge number of WAL segments to a different disk.
+```
   $ pg_ctl -D $PGDATA stop -mf
   $ rsync -avzh $PGDATA/pg_wal/ /wals
- 
-3) Create a symlink after removing the old WAL directory:
+``` 
+- Create a symlink after removing the old WAL directory:
+```
   $ rmdir $PGDATA/pg_wal
   $ ln -s /wals pg_wal
   $ ls -alrth pg_wal
     lrwxrwxrwx. 1 postgres postgres 5 Nov 10 00:16 pg_wal -> /wals
-4) Start your PostgreSQL cluster now:
+```
+- Start your PostgreSQL cluster now:
+```
    $ pg_ctl -D $PGDATA start
-
+```
 
 How it works...
 To move pg_wal, we must add a new disk to the server and create the new directory that
