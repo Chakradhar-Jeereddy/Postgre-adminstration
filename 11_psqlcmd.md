@@ -1,14 +1,18 @@
-#Install the Postgres client
-  yum install postgresql13
+- Install the Postgres client
+```
+yum install postgresql13
+```
 
-Local connection
+- Local connection
  $psql
 
-Remote connection
+- Remote connection
+ ```
  $psql -h Server_A_IP -p 5432 -d postgres -U postgres
  $psql -d percona -c "select * from foo.employee" > results.out
-
-Shortcuts
+```
+- Shortcuts
+```
  \l           -list databases
  \l+          -list databases and their sizes
  \c percona   -Switch to another database, select current_database();
@@ -16,6 +20,8 @@ Shortcuts
  \dn+         -list of schemas with privileges in a database
  \dt          -list of tables in a database
  \dt+         -list of tables and size under user or public
+```
+```
   percona=# show search_path ;
    search_path
    -----------------
@@ -24,8 +30,9 @@ Shortcuts
   \dt+ foo.*
   \d foo.employee       - Describing a table
   \?          -to get help
-  
- #To see SQLs that run in background when a shortcut command is used
+```  
+ - To see SQLs that run in background when a shortcut command is used
+```
    psql -d percona -E
    \dn
     ********* QUERY **********
@@ -34,4 +41,4 @@ Shortcuts
     FROM pg_catalog.pg_namespace n
     WHERE n.nspname !~ '^pg_' AND n.nspname <> 'information_schema'
     ORDER BY 1
-   
+   ```
