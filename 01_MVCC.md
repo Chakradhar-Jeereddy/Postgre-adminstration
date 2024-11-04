@@ -37,6 +37,19 @@ postgres-# WHERE attrelid = 'pgbench_tellers'::regclass::oid;
 select txid_current();
 ```
 - Unique identifier assigned to each transtaction, it remains same within the begin and end block;
+```
+select count(*) from pgbench_tellers;
+select txid_current();
+select count(*) from pgbench_tellers;
+select txid_current();
+begin;
+select txid_current();
+select count(*) from pgbench_tellers;
+select txid_current();
+select count(*) from pgbench_tellers;
+select txid_current();
+end;
+```
 - A transaction ID in PostgreSQL is a 32-bit integer. It is cyclic, which means that it
   starts from 0 and goes up to 4.2 billion (4,294,967,295) and then starts from 0 again.
 - The function txid_current() shows the ID of the current transaction
@@ -48,7 +61,7 @@ select txid_current();
   1) delete issued and not commited.
   2) delete issued and commited.
 - If its commited, the values anyway will not be visible in xmax, it will be 0.
-- If tran is issued but not deleted, then xmax will store that value and selects will only display the values
+- If delete tran is issued but not commited, then xmax will store that value and selects will only display the values.
 ```
 select * from foo.bar where id=2 and (xmin<=txid_current() and xmax=0 or txid_current() <xmax);
 ctid - (page/block number,index within the page)
