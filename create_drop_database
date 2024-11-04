@@ -1,7 +1,8 @@
-Use createdb and dropdb utility or it can be done from psql
-Need to be granted with superuser or createdb role or should be the owner of the database
+- Use createdb and dropdb utility or it can be done from psql
+- Need to be granted with superuser or createdb role or should be the owner of the database
 
-createdb --help
+- createdb --help
+```
 $ createdb --help
 createdb creates a PostgreSQL database.
 Usage:
@@ -28,23 +29,23 @@ directory
  -w, --no-password never prompt for password
  -W, --password force password prompt
  --maintenance-db=DBNAME alternate maintenance database
-By default, a database with the same name as the current user is
-created.Report bugs to <pgsql-bugs@postgresql.org>.
+```
+- By default, a database with the same name as the current user is
+   created.Report bugs to <pgsql-bugs@postgresql.org>.
 
-Command to create a database 
-$ createdb -e pgtest -O user1
-SELECT pg_catalog.set_config('search_path', '', false)
-CREATE DATABASE pgtest OWNER user1;
+- Command to create a database 
+  $ createdb -e pgtest -O user1
+  SELECT pg_catalog.set_config('search_path', '', false)
+  CREATE DATABASE pgtest OWNER user1;
 
-create a database using a template
-$ createdb -e pgtest -O user1 -T percona
-SELECT pg_catalog.set_config('search_path', '', false)
-CREATE DATABASE pgtest OWNER user1 TEMPLATE pg11;
+- create a database using a template
+  $ createdb -e pgtest -O user1 -T percona
+  SELECT pg_catalog.set_config('search_path', '', false)
+  CREATE DATABASE pgtest OWNER user1 TEMPLATE pg11;
 
-
-dropdb options
-
- dropdb --help
+- dropdb options
+```
+dropdb --help
 dropdb removes a PostgreSQL database.
 Usage:
  dropdb [OPTION]... DBNAME
@@ -65,9 +66,9 @@ directory
  -W, --password force password prompt
  --maintenance-db=DBNAME alternate maintenance database
 Report bugs to <pgsql-bugs@postgresql.org>.
-
-Command to drop database
-
+```
+- Command to drop database
+```
 $ dropdb -i pgtest
 Database "pgtest" will be permanently removed.
 Are you sure? (y/n) y
@@ -77,8 +78,9 @@ user \l or \l+
 or pg_databases
 
 $ psql -c "select oid, datname from pg_database"
-
-to get all options
+```
+- to get all options
+```
 postgres=# \help CREATE DATABASE
 Command: CREATE DATABASE
 Description: create a new database
@@ -96,10 +98,11 @@ CREATE DATABASE name
 
 Create database with a connection limit at database level
 CREATE DATABASE mydb WITH OWNER user2 CONNECTION LIMIT 200;
-
+```
 postgres=# \l+ mydb
 
-Find the location of database in filesystem
+- Find the location of database in filesystem
+```
 psql -c "select oid, datname from pg_database"
  oid | datname
 -------+-----------
@@ -108,10 +111,10 @@ psql -c "select oid, datname from pg_database"
  ls -ld $PGDATA/base/13878
 drwx------. 2 postgres postgres 8192 Sep 1 07:14
 /var/lib/pgsql/13/data/base/16384
-
+```
+- Find location of table
+```
 $psql -d testing -c "CREATE TABLE employee (id int)"
-
-Find location of table
 $psql -d testing -c "select oid, relname from pg_class where relname = 'employee'"
 oid | relname
 -------+----------
@@ -121,12 +124,12 @@ oid | relname
  pg_relation_filepath
 ----------------------
  base/16384/16385
- 
-A file with the name 16385 (the same as the oid of the
-employee table) is created inside the 16384 directory. The directory 16384 corresponds to
-the oid of the database we created. So, this indicates that a table in PostgreSQL is created as
-a file inside the database directory inside the base directory. This base directory is, of
-course, one of the subdirectories of the data directory.
+ ```
+A file with the name 16385 (the same as the oid of the employee table) is created 
+inside the 16384 directory. The directory 16384 corresponds to the oid of the database we created. 
+So, this indicates that a table in PostgreSQL is created as a file inside the database 
+directory inside the base directory. This base directory is, of course, one of the subdirectories 
+of the data directory.
 
 
 
