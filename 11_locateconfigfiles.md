@@ -1,4 +1,5 @@
-psql -c "show config_file"
+```
+/psql -c "show config_file"
   or 
 ps aux | grep /postgres
 /usr/pgsql-12/bin/postgres -D /var/lib/pgsql/13/data --configfile=/etc/postgresql/13/main/postgresql.conf
