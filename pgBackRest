@@ -39,6 +39,10 @@ How to take backup using pgBackRest
  psql -c "ALTER SYSTEM SET archive_command = 'pgbackrest --stanza=percdb archive-push %p'"
  sudo systemctl restart postgresql-12
 
+3) Ensure following parameters are set in postgres config file
+wal_level=replica
+archive_mode=on
+archive_comand="pgbackrest --stanza=mydb --archive-push %p"
 3) Initialize stanza for the database to be backed up and then validate to see any errors.
 a) create 
 $ pgbackrest stanza-create --stanza=percdb --log-level-console=info
@@ -89,6 +93,85 @@ How to do it,
 
 5) Start the service 
 sudo systemctl start postgresql-13
+
+Version of pgbackrest
+pgbckrest version => 2.51
+
+Compression - default is gzip (level 6)
+              best is Z-standard (level3)
+
+Features
+pgbackuprest resume (starts from it stopped)
+
+Directories that I need for backup
+log
+repo
+spool
+
+-> archive_push - Allows postgresql to push completed wals to repo
+-> archive_get  - Allows postgresql to get completed wals from repo
+
+What is archive_async=y?
+If a DB is hosting write intensive applications, postgres not able to push archives at the rate at which transactions being generated, it can take help of pgbackuprest.
+When the archive_async is enabled for archive_push, it will check the wals available for archiving and ships to repo and writes the info in spool directory. Postgres look at spool location 
+to confirm the archives already shipped instead checking in repo, on top of it use parallel_max to even speed up the shipping.
+
+How to offload backups on standby?
+put backup-standby=y, In stanza it will check the fist live standby in list and pics from there.
+
+How to check archiving is slow?
+ select last_archived_wal from pg_stat_archiver;
+    last_archived_wal
+--------------------------
+ 000000050000000100000042
+
+select sent_lsn,write_lsn,flush_lsn from pg_stat_replication;
+sent_lsn - wal send but not sure if it was received
+write_lsn - wal was recived and written to cache
+flush_lsn - wal is written to disk
+
+Full backup - --type=full or --type=inc or --type=diff
+restore  --type=time "--target=dd/mm/yyy:hh:mm:ss"
+
+=> command to restore backup to end of stream
+pgbackuprest --stanza=precdb --log-level-console=info restore (after restore make sure archive command is poiting to different repo)
+=> commad to restore singe database
+pgbackuprest --stanza=precdb --log-level-console=info restore --db-include=chakra (this will resote selected database files and other files also but empty, it saves log of storage)
+=> to exclude databases from cluster use --db-exclude
+=> command to restore database to sepecific point in time
+pgbackuprest --stanza=precdb --log-level-console=info --type=time "--target=dd/mm/yyy:hh:mm:ss" restore
+
+=> command to restore cluster on different database and enabling streaming
+pgbackuprest --stanza=precdb --log-level-console=info --type=standby --recovery-option=primary_conninfo="user=rep password='' host='' app_name=spare' restore
+
+=> what is the role of --delta, it restore only the missing files and preseves the files already exists.
+
+
+What are the restore types?
+--target = target to reach or immediate
+--recovery_target_lsn 
+--recovery target_timeline
+--recovery_target_name = restore point
+-- recovery_target_xid = 
+What is archive_push_queue_max=10g
+Availability over data loss.
+If repo is not available and network is slow, the archives starts pilling up and at some point production will freeze to operate.
+Monitoring of the continus archiving is important, if the cap is reached, it will simply drop the archives to maintain space in wall directoy and keep prod live.
+When this happens, need to fix the archive process and initiate immediate full backup. postgres wont blocked but it generated missing archives.
+
+To check logging, set log-level-console=debug\
+
+How to validate the backup is good?
+pgbackuprest only checks weather the old and recent lsn is available to ensure backup consitency, but it wont check if archives in between are available.
+The most relaible validation is restore and test backup.
+You can use pgbackuprest --stanza=db verify (but it wont garentee)
+
+
+
+
+
+=> 
+
 
 
 
