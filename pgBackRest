@@ -1,3 +1,46 @@
+the backup is called from python program
+from pg_library import PgBackRest
+
+cat /etc/pgbackrest.conf
+[global]
+start-fast=y
+stop-auto=y
+compress-level=3
+archive-async=y
+repo1-retention-full=31
+repo1-s3-verify-ssl=y
+repo1-type=s3
+repo1-s3-bucket=<bucket name>
+repo1-s3-key=
+repo1-s3-key-secret=
+repo1-s3-endpoint=
+repo1-path=
+repo1-s3-ca-file=
+repo1-s3-region=eu-fr-paris
+
+[global:backup]
+parallel-max=2
+
+
+[global:archive_push]
+parallel-max=2
+spool-path=/data/pgarchive01
+
+[global:archive_get]
+archive-get-max-queue=1g
+parallel-max2
+
+[global:restore]
+process-max=8
+
+[PGCUSTER]
+pg1-path= $PGDATA
+pg1-port=12400
+
+
+
+
+
 Capability
 Open source tool offers parallel backups, incremental backups, differential backups and can stream a backup to cloud.
 This is very suitable for database environments that are several terabytes in size.
