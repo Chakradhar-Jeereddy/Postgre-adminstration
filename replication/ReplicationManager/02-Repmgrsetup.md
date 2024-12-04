@@ -1,5 +1,10 @@
 # Case 1:
 ### Objective:
+
+- postgresql.auto.conf parameter
+   - primary_conninfo = user=repmgr connect_timeout=10 host=''ip-12'' port=12400 sslmode=require application_name=''ip-170-90-123" passfile='/home/postgres/.pgpass'
+   - primary_slot_name = 'repmgr_slot_1'
+   - archive_cleanup_command = 'pg_archive_cleanup /data/psql/pg_wal %r'
 - Install postgresql and repmgr. 
 - Register primary server with repmgr and clone standby server.
 - Verify streaming replication.
