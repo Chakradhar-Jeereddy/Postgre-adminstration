@@ -1,3 +1,4 @@
+```
 listen_addesses = '*'
 port = 12400
 unix_socket_directories = '/var/run/postgresql'
@@ -20,7 +21,7 @@ log_connections = on
 log_disconnections = on
 log_hostname = off
 log_autovaccum_min_duration = 5000
-
+```
 ssl = on
 ssl_cert_file = ''
 ssl_key_file= ''
