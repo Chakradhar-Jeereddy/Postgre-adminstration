@@ -1,3 +1,4 @@
+```
 TYPE       DATABASE       USER    ADDRESS   METHOD
 local        all         postgres           peer
 host      replication    pg       0.0.0.0/0   SCRAM-SHA-256
@@ -13,3 +14,4 @@ TO check whether a connection is ssl or not use the view
 select * from pg_stat_ssl;
 pid  ssl   version     cipher                   bits        client_dn  client_serial  isser_dn
 142   t     TLSc1.3  TLS_AES_256_OCM_SHA384      256
+```
