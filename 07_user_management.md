@@ -91,4 +91,13 @@ REASSIGN OWNED BY { old_role | CURRENT_ROLE | CURRENT_USER | SESSION_USER } [, .
 
 ```
 
+```
+Password managment:
+select * from pg_shadow;
+alter system set password_encryption='md5' or 'scram-sha-256'
+alter user nihu with password 'hellome';
+The password gets encypted and stared in system tablespace
+```
+
+
 
