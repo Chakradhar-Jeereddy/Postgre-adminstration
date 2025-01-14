@@ -82,6 +82,13 @@ GRANT scott_readonly to devuser1;
 GRANT tiger_readonly to devuser2;
 ```
  
+```
+Command:     REASSIGN OWNED
+Description: change the ownership of database objects owned by a database role
+Syntax:
+REASSIGN OWNED BY { old_role | CURRENT_ROLE | CURRENT_USER | SESSION_USER } [, ...]
+               TO { new_role | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
 
+```
 
 
