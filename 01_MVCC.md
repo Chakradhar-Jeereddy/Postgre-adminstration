@@ -55,7 +55,12 @@ end;
 - The function txid_current() shows the ID of the current transaction
 - xmin - is the transaction id that inserted that row, if the rows are inserted as part of same transacton, its xmin value will remain same.
   Any sql statement that started before a transaction lets say 1095, will not abe able to see the future transactions
-- xmax - if value of xmax is 0 means the record was never deleted, if it shows a txid that is the transaction which issued a delete
+- xmax - if value of xmax is 0 means the rows will be visible to all application users. If it shows txid, that an uncomitted delete or update and will not be visible to ongoing session.
+- Isolation levels are "read commit", "repeatable read", "serialized repeatable read".
+ "read notcommited" is not supported.
+  For read consitency use repeatable read.
+-
+- the record was never deleted, if it shows a txid that is the transaction which issued a delete
 
 - Two senarios here 
   1) delete issued and not commited.
