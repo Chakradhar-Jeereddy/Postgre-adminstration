@@ -29,7 +29,20 @@ When shared buffers are under sized, the clock sweep algorithm runs aggresively 
 usage count of hot blocks.
 ```
 
+```
+Clock sweep process is part of the background writer and buffer managment system.
+It determines how frequently dirty pages (modified data) in shared buffers are written to disk.
 
+The interval at which clock sweep runs is controlled by following parameters
+bgwriter_delay=200ms  : Determines how often background writer wakes up to scan buffers and perform clock sweep. Default is 200 milli seconds.
 
+bgwriter_lru_maxpages - Number of buffers writen disk each clock sweep pass.
+Default: 100 pages
+bgwriter_lru_multiplier - Adjusts the aggresiveness of bgwriter by calculating how many buffers to target based on future needs.
+Default is 2 (aggressive)
+
+During clock sweep scan of shared buffer it identified dirty buffers not writen to disk based on above
+settings. Ensures enough clean buffers are available for incomming connections.
+```
 
 
