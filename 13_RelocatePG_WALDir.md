@@ -17,6 +17,10 @@
 ```
   $ pg_ctl -D $PGDATA stop -mf
   $ rsync -avzh $PGDATA/pg_wal/ /wals
+The files are transferred in "archive" mode, which  ensures  that  symbolic  links,
+       devices,  attributes,  permissions, ownerships, etc. are preserved in the transfer.  Additionally, compression will
+       be used to reduce the size of data portions of the transfer.
+
 ``` 
 - Create a symlink after removing the old WAL directory:
 ```
