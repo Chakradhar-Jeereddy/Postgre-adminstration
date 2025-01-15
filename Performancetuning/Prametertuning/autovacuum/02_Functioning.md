@@ -173,8 +173,24 @@ alter table warehouse set (Autovacuum_anlyze__threshold=500);
 The vacuum is triggered when 10% rows are modifed and 500 row are modified, reduced from 20$% to 10$.
 The analyze is triggered when 10% rows are modifed and 500 row are modified
 
+Monitor the progess of autovacuum
 
-
+```
+           View "pg_catalog.pg_stat_progress_vacuum"
+       Column       |  Type   | Collation | Nullable | Default
+--------------------+---------+-----------+----------+---------
+ pid                | integer |           |          |
+ datid              | oid     |           |          |
+ datname            | name    |           |          |
+ relid              | oid     |           |          |
+ phase              | text    |           |          |
+ heap_blks_total    | bigint  |           |          |
+ heap_blks_scanned  | bigint  |           |          |
+ heap_blks_vacuumed | bigint  |           |          |
+ index_vacuum_count | bigint  |           |          |
+ max_dead_tuples    | bigint  |           |          |
+ num_dead_tuples    | bigint  |           |          |
+```
 
      
       
