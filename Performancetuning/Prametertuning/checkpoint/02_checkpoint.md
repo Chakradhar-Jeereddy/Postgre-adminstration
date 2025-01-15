@@ -23,6 +23,16 @@ checkpoint_completion_target | 0.9
 postgres=# show max_wal_size;
 -[ RECORD 1 ]+----
 max_wal_size | 1GB
+
+postgres=# select name,setting from pg_settings where name like 'checkpo%';
+             name             | setting
+------------------------------+---------
+ checkpoint_completion_target | 0.9
+ checkpoint_flush_after       | 32
+ checkpoint_timeout           | 300
+ checkpoint_warning           | 30
+(4 rows)
+
 ```
 - Checkpoint_timeout: 5 minutes(default)
 - After every 5 mins checkpoint is triggered and dirty pages are written to disk.
