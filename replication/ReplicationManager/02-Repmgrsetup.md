@@ -1,6 +1,8 @@
 # Case 1:
 ### Objective:
 
+https://www.enterprisedb.com/postgres-tutorials/how-implement-repmgr-postgresql-automatic-failover
+
 - postgresql.auto.conf parameter
    - primary_conninfo = user=repmgr connect_timeout=10 host=''ip-12'' port=12400 sslmode=require application_name=''ip-170-90-123" passfile='/home/postgres/.pgpass'
    - primary_slot_name = 'repmgr_slot_1'
